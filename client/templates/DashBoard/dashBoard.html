@@ -8,10 +8,10 @@
   {{/contentFor}}
       {{#ionList}}
        {{#each devices}}
-          {{#ionItem path="deviceInfo" buttonRight=true avatar=true class="item-icon-right"}}
+          {{#ionItem path="deviceInfo" class="item-button-right" }}
             <h2>{{model}}</h2>
             <p>{{locate}}</p>
-             {{> ionIcon icon="ios-arrow-forward" class="positive"}}
+            {{> _closeButton}}
           {{/ionItem}}
         {{/each}}
       {{/ionList}}

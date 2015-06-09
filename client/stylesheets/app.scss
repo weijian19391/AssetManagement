@@ -37,3 +37,33 @@ $loading-font-size: 22px;
     top: 16px !important;
   }
 }
+
+.button.vote-button {
+  width: 30px;
+  max-width: 30px;
+  min-width: 30px;
+  padding: 20px 0 0 0;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  font-size: 12px;
+  border: 0;
+  border-radius: $border-radius-base;
+  line-height: 20px;
+
+  &.has-voted {
+    .icon {
+      color: $positive;
+    }
+  }
+
+  .icon {
+    height: 20px;
+    top: 4px;
+
+    &:before {
+      font-size: 20px;
+      line-height: 20px;
+    }
+  }
+}

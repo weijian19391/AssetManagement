@@ -19,3 +19,4 @@ Template.dashBoard.helpers({
     return Devices.find();
   }
 });
+

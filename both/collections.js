@@ -5,12 +5,13 @@ Devices.attachSchema(new SimpleSchema({
     type: String,
     max: 200,
     label: "Device Model",
-    allowedValues: ['Raspberry Pi Model B+', 'BeagleBone Black', 'TI2.0'],
+    allowedValues: ['Raspberry Pi Model B+', 'BeagleBone Black', 'TI Sensor Tag 2.0','Arduino Uno'],
         autoform: {
           options: [
             {label: "Raspberry Pi Model B+", value: "Raspberry Pi Model B+"},
             {label: "BeagleBone Black", value: "BeagleBone Black"},
-            {Label: "TI Sensor Tag 2.0", value: "TI Sensor Tag 2.0"}
+            {label: "TI Sensor Tag 2.0", value: "TI Sensor Tag 2.0"},
+            {label: "Arduino Uno", value: "Arduino Uno"}
           ]
         }
   },
@@ -42,6 +43,15 @@ if (Meteor.isServer) {
         checkdata: function () {
             this.unblock();
             return Meteor.http.call("GET", "https://rpidemo.mybluemix.net/api/temp/list");
+        },
+        deleteDevice: function (deviceId) {
+          var device = Devices.findOne({UUID:deviceId});
+          if (device.owner!== Meteor.userId()) {
+            // If the task is private, make sure only the owner can delete it
+            throw new Meteor.Error("not-authorized");
+          }
+          Devices.remove(device._id);
+
         }
     });
     Meteor.publish('devices', function() {
@@ -49,7 +59,7 @@ if (Meteor.isServer) {
       return Devices.find({owner: currentUserId});
     });
 
-    Devices.permit('insert').ifLoggedIn().apply();
+    Devices.permit(['insert', 'update', 'remove']).ifLoggedIn().apply();
     
 }
 
