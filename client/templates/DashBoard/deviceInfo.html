@@ -1,0 +1,50 @@
+<template name="deviceInfo">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="/" text="DashBoard"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title">Details</h1>
+  {{/contentFor}}
+
+  <!-- {{#contentFor "headerButtonRight"}}
+    <button class="button button-clear" data-ion-modal="_contactsEdit" data-id="{{contact._id}}">Edit</button>
+  {{/contentFor}} -->
+
+  {{#ionView}}
+    {{#ionContent class="padding contact-detail"}}
+      {{#with device}}
+        <div class="list card">
+
+          <div class="item item-divider">
+            <h2>{{device.model}}</h2>
+            <p>{{device.locate}}</p>
+          </div>
+
+          <div class="item item-body">
+            <h4>Device Information</h4>
+            <p>
+              Owner of device: {{device.owner}}
+            </p>
+          </div>
+
+          <div class="item item-body">
+            <h4>Sensors Information</h4>
+            <p>
+              {{#each device.sensors}}
+                {{#if equals type "Temperature"}} 
+                  {{type}} : {{getData.cputemp}}
+                {{/if}}
+                {{#if equals type "pressure"}} 
+                  {{type}} : {{getData.sine}}
+                {{/if}}
+                <br>
+                {{/each}}
+            </p>
+          </div>
+
+        </div>
+      {{/with}}
+    {{/ionContent}}
+  {{/ionView}}
+</template>

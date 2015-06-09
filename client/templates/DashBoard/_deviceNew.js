@@ -1,11 +1,12 @@
 AutoForm.hooks({
-  'edit-form': {
+  'devices-new-form': {
     onSuccess: function (operation, result, template) {
-      alert('Post saved successfully!');
+      IonModal.close();
+     //Router.go('devices.show', {_id: result});
     },
 
     onError: function(operation, error, template) {
-      console.log(error);
+      alert(error);
     }
   }
 });

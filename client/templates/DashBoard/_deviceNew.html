@@ -1,0 +1,21 @@
+<template name="_deviceNew">
+  {{#ionModal customTemplate=true}}
+    {{#autoForm collection="Devices" id="devices-new-form" type="insert"}}
+      <div class="bar bar-header bar-positive">
+        <button data-dismiss="modal" type="button" class="button button-clear">Cancel</button>
+        <h2 class="title">Add Device</h2>
+        <button type="submit" class="button button-clear">Add</button>
+      </div>
+      <div class="content has-header overflow-scroll">
+      <fieldset>
+      <div class="list card">
+              {{> afQuickField name='model' options="allowed"}}
+              {{> afQuickField name='UUID'}}
+              {{> afQuickField name='sensors' options=numSelectOptions}}
+              {{> afQuickField name='locate'}}
+      </div>
+      </fieldset>
+      </div>
+    {{/autoForm}}
+  {{/ionModal}}
+</template>

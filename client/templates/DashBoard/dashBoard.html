@@ -1,0 +1,19 @@
+<template name="dashBoard">
+  {{#contentFor "headerTitle"}}
+    <h1 class="title">Active Devices</h1>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+    <button class="button button-clear" data-ion-modal="_deviceNew">{{> ionIcon icon="ios-plus-empty"}}</button>
+  {{/contentFor}}
+      {{#ionList}}
+       {{#each devices}}
+          {{#ionItem path="deviceInfo" buttonRight=true avatar=true class="item-icon-right"}}
+            <h2>{{model}}</h2>
+            <p>{{locate}}</p>
+             {{> ionIcon icon="ios-arrow-forward" class="positive"}}
+          {{/ionItem}}
+        {{/each}}
+      {{/ionList}}
+      <button class="button button-positive button-block" data-action="logout">Log Out</button>
+</template>
