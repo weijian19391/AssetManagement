@@ -1,19 +1,38 @@
 <template name="dashBoard">
-  {{#contentFor "headerTitle"}}
-    <h1 class="title">Active Devices</h1>
-  {{/contentFor}}
+  {{#if currentUser}}
+    {{#ionSideMenuContainer side ="left"}}
+      {{#ionSideMenu}}
+        {{ > leftSideMenu}}
+        {{> yield "leftSideBar"}}
+      {{/ionSideMenu}}
 
-  {{#contentFor "headerButtonRight"}}
-    <button class="button button-clear" data-ion-modal="_deviceNew">{{> ionIcon icon="ios-plus-empty"}}</button>
-  {{/contentFor}}
-      {{#ionList}}
-       {{#each devices}}
-          {{#ionItem path="deviceInfo" class="item-button-right" }}
-            <h2>{{model}}</h2>
-            <p>{{locate}}</p>
-            {{> _closeButton}}
-          {{/ionItem}}
-        {{/each}}
-      {{/ionList}}
-      <button class="button button-positive button-block" data-action="logout">Log Out</button>
+    {{#ionSideMenuContent}}
+        {{#contentFor "headerTitle"}}
+          <h1 class="title">Active Devices</h1>
+        {{/contentFor}}
+        {{#contentFor "headerButtonLeft"}}
+            <button class="button button-clear pull-left" data-ion-menu-toggle="left">
+              {{#if isAndroid}}
+                {{> ionIcon icon='android-more-vertical'}}
+              {{else}}
+                {{> ionIcon icon='navicon'}}
+              {{/if}}
+            </button>
+          {{/contentFor}}
+        {{#contentFor "headerButtonRight"}}
+          <button class="button button-clear" data-ion-modal="_deviceNew">{{> ionIcon icon="ios-plus-empty"}}</button>
+        {{/contentFor}}
+            {{#ionList}}
+             {{#each devices}}
+                {{#ionItem path="deviceInfo" class="item-button-right" }}
+                  <h2>{{model}}</h2>
+                  <p>{{locate}}</p>
+                  {{> _closeButton}}
+                {{/ionItem}}
+              {{/each}}
+            {{/ionList}}
+            <button class="button button-positive button-block" data-action="logout">Log Out</button>
+      {{/ionSideMenuContent}}
+    {{/ionSideMenuContainer}}
+  {{/if}}
 </template>

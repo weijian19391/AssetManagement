@@ -3,4 +3,7 @@ AccountsTemplates.configure({
   negativeFeedback: false,
   positiveValidation: false,
   positiveFeedback: false,
+   onLogoutHook: function () {
+    Router.go('/');
+  },
 });

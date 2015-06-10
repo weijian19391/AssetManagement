@@ -1,10 +1,14 @@
 <template name="userAccounts">
-  {{#contentFor "headerTitle"}}
-    <h1 class="title">User Accounts</h1>
-  {{/contentFor}}
       {{#if currentUser}}
         {{>dashBoard}}
       {{else}}
-        {{> atForm}}
+      	{{#contentFor "headerTitle"}}
+      	  <h1 class="title">UserAccount</h1>
+      	{{/contentFor}}
+        {{#contentFor "headerButtonLeft"}}
+        {{/contentFor}}
+        {{#contentFor "headerButtonRight"}}
+        {{/contentFor}}
+        {{> atForm }}
       {{/if}}
 </template>

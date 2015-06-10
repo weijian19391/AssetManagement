@@ -1,35 +1,21 @@
 <template name="layout"> <!--All meteor-ionic apps must have an ionBody component at the root. This element has various classes and event handlers attached to it. In your iron:router layout, make sure you have an ionBody component surrounding your {{>yield}}:-->
   {{#ionBody}}
-
-    {{#ionSideMenuContainer side ="left"}}
-      {{#ionSideMenus}}
-        {{#ionSideMenu}}
-          <div class="bar bar-header bar-dark">
-            <h1 class="title">Left Menu</h1>
-          </div>
-          <div class="content has-header">
-            <div class="list">
-              {{#if currentUser}}
-              {{#each currentUser.emails}}
-              Current User: {{address}}
-              {{/each}}
-              <button class="button button-positive button-block" data-action="logout">Log Out</button>
-              {{/if}}
-            </div>
-          </div>
-        {{/ionSideMenu}}
-      {{/ionSideMenus}}
-    {{#ionSideMenuContent}}
-
-        {{> ionNavBar class="bar-positive"}}
-
-        {{#ionNavView}}
-          {{> yield}} <!-- yield here will render everything in my template/index/index.html, i.e. things inside my index template-->
-        {{/ionNavView}}
-
-      {{/ionSideMenuContent}}
-
-    {{/ionSideMenuContainer}}
-
+    {{> ionNavBar class="bar-positive"}}
+      {{#ionNavView}}
+        {{> yield}}
+      {{/ionNavView}}
   {{/ionBody}}
 </template>
+
+<!-- {{#ionSideMenuContainer side ="left"}}
+      {{#ionSideMenu}}
+        {{> yield "leftSideBar"}}
+    {{/ionSideMenu}}
+
+    {{#ionSideMenuContent}}
+        {{> ionNavBar class="bar-positive"}}
+        {{#ionNavView}}
+          {{> yield}}
+        {{/ionNavView}}
+      {{/ionSideMenuContent}}
+    {{/ionSideMenuContainer}} -->
