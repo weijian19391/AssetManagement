@@ -22,10 +22,8 @@ Template.deviceInfo.helpers({
     Meteor.call("checkdata", function(error, results) {
       Session.set('data', JSON.parse(results.content).d);
     });
-    //console.log(Session.get('data'));
     return (Session.get('data'));
   }
-
 });
 
  Template.registerHelper('equals', function (a, b) {
