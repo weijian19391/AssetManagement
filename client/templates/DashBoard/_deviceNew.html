@@ -1,6 +1,6 @@
 <template name="_deviceNew">
   {{#ionModal customTemplate=true}}
-    {{#autoForm collection="Devices" id="devices-new-form" type="insert"}}
+    {{#autoForm collection="Devices" id="devices-new-form" type="insert" omitFields="owner"}}
       <div class="bar bar-header bar-positive">
         <button data-dismiss="modal" type="button" class="button button-clear">Cancel</button>
         <h2 class="title">Add Device</h2>
@@ -13,6 +13,7 @@
               {{> afQuickField name='UUID'}}
               {{> afQuickField name='sensors' options=numSelectOptions}}
               {{> afQuickField name='locate'}}
+              {{> afQuickField name='owner'}}
       </div>
       </fieldset>
       </div>

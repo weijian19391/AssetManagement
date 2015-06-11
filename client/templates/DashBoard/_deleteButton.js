@@ -1,4 +1,4 @@
-Template._closeButton.events({
+Template._deleteButton.events({
 
   'click [data-action="showConfirm"]': function(event, template) {
     event.preventDefault();

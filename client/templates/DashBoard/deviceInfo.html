@@ -24,7 +24,11 @@
           <div class="item item-body">
             <h4>Device Information</h4>
             <p>
-              Owner of device: {{device.owner}}
+              Owner of device: 
+              {{#each device.owner}}
+              <br>
+              {{email}}
+              {{/each}}
             </p>
           </div>
 

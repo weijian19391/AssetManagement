@@ -15,13 +15,12 @@ Devices.attachSchema(new SimpleSchema({
           ]
         }
   },
-
   UUID: {
     type: String,
     label: "Device UUID"
   },
   sensors: {
-    type: [Object],
+    type: [Object]
   },
   'sensors.$.type':{
     type: String,
@@ -32,9 +31,17 @@ Devices.attachSchema(new SimpleSchema({
     label: "Device location"
   },
   owner: {
+    type: [Object]
+  },
+  // 'owner.$.userId':{
+  //   type: String,
+  //   label: "userId",
+  //   //autoValue:function(){ return this.userId;}
+  // },
+  'owner.$.email': {
     type: String,
-    label: "Device owner",
-    autoValue:function(){ return this.userId;}
+    label: "Email",
+    //autoValue:function(){ return Meteor.user().emails[0].address;}
   }
 }));
 
@@ -46,7 +53,7 @@ if (Meteor.isServer) {
         },
         deleteDevice: function (deviceId) {
           var device = Devices.findOne({UUID:deviceId});
-          if (device.owner!== Meteor.userId()) {
+          if (device.owner.userId!== Meteor.userId()) {
             // If the task is private, make sure only the owner can delete it
             throw new Meteor.Error("not-authorized");
           }
@@ -55,26 +62,16 @@ if (Meteor.isServer) {
         }
     });
     Meteor.publish('devices', function() {
-      var currentUserId = this.userId;
-      return Devices.find({owner: currentUserId});
+      var currId = this.userId;
+      if (currId !== null){ // added this line because once logged, this.userId will become null.
+      var currentUserEmail = Meteor.users.find({_id: currId}).fetch()[0].emails[0].address;
+      return Devices.find({owner: {$elemMatch:{email:currentUserEmail}}});
+    }
+      //return Devices.find();
     });
-
     Devices.permit(['insert', 'update', 'remove']).ifLoggedIn().apply();
-    
 }
 
 if(Meteor.isClient) {
   Meteor.subscribe('devices');
-  // var deviceHooks = {
-  //   before: {
-  //     insert: function(doc) {
-  //       if(Meteor.userId()){
-  //         doc.userId = Meteor.userId();
-  //       }
-  //       return doc;
-  //     }
-  //   }
-  // };
-   
-//  AutoForm.addHooks('insertDeviceForm', deviceHooks);
 }

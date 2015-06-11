@@ -1,4 +1,4 @@
-// Meteor.startup(function () {
-//     Devices.remove({});
+Meteor.startup(function () {
+    Devices.remove({});
 
-// });
+});

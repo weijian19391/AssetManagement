@@ -8,7 +8,6 @@ accounts-password
 fourseven:scss
 iron:router
 zimme:iron-router-active
-anti:fake
 matb33:collection-hooks
 aldeed:collection2
 aldeed:autoform
@@ -18,5 +17,5 @@ meteoric:ionic
 meteoric:autoform-ionic
 useraccounts:ionic
 ongoworks:security
-gildaspk:autoform-materialize
 mizzao:bootstrap-3
+accounts-ui
