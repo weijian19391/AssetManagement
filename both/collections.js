@@ -59,19 +59,45 @@ if (Meteor.isServer) {
           }
           Devices.remove(device._id);
 
+        },
+        getAdminUser: function(){
+          return Meteor.users.find({_id:"qNLTjCFJZ72NzwDf7"}).fetch();
         }
     });
+    Meteor.call("getAdminUser", function(error, results) {
+      user = results;
+      Roles.setUserRoles(user, 'admin');
+      //Roles.addUsersToRoles(user, ['admin','staff']);
+      //Roles.removeUsersFromRoles(user, ['master','staff']);
+      //Roles.getRolesForUser(Meteor.user())
+    });
+   
     Meteor.publish('devices', function() {
       var currId = this.userId;
       if (currId !== null){ // added this line because once logged, this.userId will become null.
-      var currentUserEmail = Meteor.users.find({_id: currId}).fetch()[0].emails[0].address;
-      return Devices.find({owner: {$elemMatch:{email:currentUserEmail}}});
+        if (Roles.getRolesForUser(currId)[0] === "admin") {
+          return Devices.find();
+        }
+        var currentUserEmail = Meteor.users.find({_id: currId}).fetch()[0].emails[0].address;
+        return Devices.find({owner: {$elemMatch:{email:currentUserEmail}}});
     }
       //return Devices.find();
     });
     Devices.permit(['insert', 'update', 'remove']).ifLoggedIn().apply();
+
+    Meteor.publish("userData", function () {
+      var currId = this.userId;
+      if (currId !== null)
+      return Meteor.users.find({_id: currId}, {fields: {'other': 1, 'things': 1}});
+    });
+    Meteor.publish("allUserData", function () {
+      return Meteor.users.find({}, {fields: {'nested.things': 1}});
+    });
+    //Meteor.users.permit('update').apply();
 }
 
 if(Meteor.isClient) {
   Meteor.subscribe('devices');
+  Meteor.subscribe("userData");
+  Meteor.subscribe("allUserData");
 }
