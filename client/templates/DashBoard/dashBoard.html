@@ -27,7 +27,11 @@
                 {{#ionItem path="deviceInfo" class="item-button-right" }}
                   <h2>{{model}}</h2>
                   <p>{{locate}}</p>
-                  {{> _deleteButton}}
+                  {{#if viewOnly viewer}}
+                    <icon class="button button-clear">{{> ionIcon icon="ios-eye"}}</icon>
+                  {{else}}
+                    {{> _deleteButton}}
+                  {{/if}}
                 {{/ionItem}}
               {{/each}}
             {{/ionList}}

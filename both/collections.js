@@ -33,15 +33,17 @@ Devices.attachSchema(new SimpleSchema({
   owner: {
     type: [Object]
   },
-  // 'owner.$.userId':{
-  //   type: String,
-  //   label: "userId",
-  //   //autoValue:function(){ return this.userId;}
-  // },
   'owner.$.email': {
     type: String,
     label: "Email",
-    //autoValue:function(){ return Meteor.user().emails[0].address;}
+  },
+  viewer: {
+    type: [Object],
+    optional: true
+  },
+  'viewer.$.email': {
+    type: String,
+    label: "Email",
   }
 }));
 
@@ -79,9 +81,9 @@ if (Meteor.isServer) {
           return Devices.find();
         }
         var currentUserEmail = Meteor.users.find({_id: currId}).fetch()[0].emails[0].address;
-        return Devices.find({owner: {$elemMatch:{email:currentUserEmail}}});
+        // this is the and condition: return Devices.find({owner: {$elemMatch:{email:currentUserEmail}}, viewer: {$elemMatch:{email:currentUserEmail}}});
+        return Devices.find({ $or: [ {owner: {$elemMatch:{email:currentUserEmail}}}, {viewer: {$elemMatch:{email:currentUserEmail}}} ]});
     }
-      //return Devices.find();
     });
     Devices.permit(['insert', 'update', 'remove']).ifLoggedIn().apply();
 
