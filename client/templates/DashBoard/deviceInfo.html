@@ -7,8 +7,13 @@
     <h1 class="title">Details</h1>
   {{/contentFor}}
 
+
   {{#contentFor "headerButtonRight"}}
-    <button class="button button-clear" data-ion-modal="_deviceEdit" data-id="{{device._id}}">Edit</button>
+    {{#if viewOnly device.viewer}}
+       <button class="button button-clear" data-ion-modal="_viewOnly">{{> ionIcon icon="ios-eye"}}</button>
+    {{else}}
+       <button class="button button-clear" data-ion-modal="_deviceEdit" data-id="{{device._id}}"> {{> ionIcon icon="edit"}} </button>
+    {{/if}}
   {{/contentFor}}
 
   {{#ionView}}
@@ -22,10 +27,17 @@
           </div>
 
           <div class="item item-body">
-            <h4>Device Information</h4>
+            <h3>Device Information</h3>
             <p>
-              Owner of device: 
+              <b>Owners of device:</b>
               {{#each device.owner}}
+              <br>
+              {{email}}
+              {{/each}}
+            </p>
+            <p>
+              <b>Viewers of device:</b>
+              {{#each device.viewer}}
               <br>
               {{email}}
               {{/each}}
@@ -38,6 +50,7 @@
               {{#each device.sensors}}
                 {{#if equals type "Temperature"}} 
                   {{type}} : {{getData.cputemp}}
+                  {{> highchartsHelper chartId="test" chartWidth="100%" charHeight="100%" chartObject=topGenresChart}}
                 {{/if}}
                 {{#if equals type "pressure"}} 
                   {{type}} : {{getData.sine}}

@@ -1,3 +1,10 @@
+Template._deviceNew.helpers({
+  ownerData: function () {
+    return {owner:[{email:Meteor.user().emails[0].address}]};
+  }
+});
+
+
 AutoForm.hooks({
   'devices-new-form': {
     onSuccess: function (operation, result, template) {
