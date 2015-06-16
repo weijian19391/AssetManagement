@@ -51,6 +51,7 @@
                 {{#if equals type "Temperature"}} 
                   {{type}} :
                   {{> chartDisplay}}
+                  {{type}} : {{getData.cputemp}}
                 {{/if}}
                 {{#if equals type "pressure"}} 
                   {{type}} :
