@@ -49,11 +49,11 @@
             <p>
               {{#each device.sensors}}
                 {{#if equals type "Temperature"}} 
-                  {{type}} : {{getData.cputemp}}
-                  {{> highchartsHelper chartId="test" chartWidth="100%" charHeight="100%" chartObject=topGenresChart}}
+                  {{type}} :
+                  {{> chartDisplay}}
                 {{/if}}
                 {{#if equals type "pressure"}} 
-                  {{type}} : {{getData.sine}}
+                  {{type}} :
                 {{/if}}
                 <br>
                 {{/each}}

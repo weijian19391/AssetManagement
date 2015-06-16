@@ -87,19 +87,19 @@ if (Meteor.isServer) {
     });
     Devices.permit(['insert', 'update', 'remove']).ifLoggedIn().apply();
 
-    Meteor.publish("userData", function () {
-      var currId = this.userId;
-      if (currId !== null)
-      return Meteor.users.find({_id: currId}, {fields: {'other': 1, 'things': 1}});
-    });
-    Meteor.publish("allUserData", function () {
-      return Meteor.users.find({}, {fields: {'nested.things': 1}});
-    });
+    // Meteor.publish("userData", function () {
+    //   var currId = this.userId;
+    //   if (currId !== null)
+    //   return Meteor.users.find({_id: currId}, {fields: {'other': 1, 'things': 1}});
+    // });
+    // Meteor.publish("allUserData", function () {
+    //   return Meteor.users.find({}, {fields: {'nested.things': 1}});
+    // });
     //Meteor.users.permit('update').apply();
 }
 
 if(Meteor.isClient) {
   Meteor.subscribe('devices');
-  Meteor.subscribe("userData");
-  Meteor.subscribe("allUserData");
+  // Meteor.subscribe("userData");
+  // Meteor.subscribe("allUserData");
 }

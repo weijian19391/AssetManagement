@@ -20,4 +20,8 @@ ongoworks:security
 mizzao:bootstrap-3
 accounts-ui
 alanning:roles
-maazalik:highcharts
+mfpierre:chartist-js
+d3
+underscore
+meteorhacks:kadira-debug
+momentjs:moment
