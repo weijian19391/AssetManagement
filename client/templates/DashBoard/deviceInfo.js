@@ -18,18 +18,25 @@ Template.deviceInfo.helpers({
   device: function () {
     return Devices.findOne({_id: Router.current().params._id});
   },
+  image: function(){
+    // console.log(Session.get('imageArr'));
+    return (Images.find({_id:{$in:Session.get('imageArr')}}));
+  },
   getData: function(){
     Meteor.call("checkdata", function(error, results) {
       Session.set('data', JSON.parse(results.content).d);
     });
     return (Session.get('data'));
+  },
+  deviceId: function(){
+    return Router.current().params._id;
   }
-
 });
 
 Template.registerHelper('equals', function (a, b) {
       return a === b;
 });
+//should shift this to dashboard.js
 //device_viewers is an array of objects,each array consists of email property
 Template.registerHelper('viewOnly', function (device_viewers) {
   var length = 0;
@@ -42,5 +49,14 @@ Template.registerHelper('viewOnly', function (device_viewers) {
       return true;
   }
   return false;
+});
+
+Template.registerHelper('haveImage', function (imageArray) {
+  if (imageArray){
+    Session.set('imageArr', imageArray);
+    return true;
+  }else{
+    return false;
+  }
 });
 

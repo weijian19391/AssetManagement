@@ -28,6 +28,15 @@
 
           <div class="item item-body">
             <h3>Device Information</h3>
+            {{#if haveImage imageId}}
+              {{#each image}}
+                {{#with url}}
+                  <div>
+                    <a href="{{this}}" target="_blank"><img src="{{this}}" /></a>
+                  </div>
+                  {{/with}}
+                {{/each}}
+            {{/if}}
             <p>
               <b>Owners of device:</b>
               {{#each device.owner}}

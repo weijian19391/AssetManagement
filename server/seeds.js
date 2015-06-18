@@ -1,4 +1,5 @@
-// Meteor.startup(function () {
-//     Points.remove({});
+Meteor.startup(function () {
+    Images.remove({});
+    Devices.remove({});
 
-// });
+});

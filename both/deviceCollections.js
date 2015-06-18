@@ -44,7 +44,12 @@ Devices.attachSchema(new SimpleSchema({
   'viewer.$.email': {
     type: String,
     label: "Email",
+  },
+  imageId: {
+    type: [String],
+    optional: true
   }
+
 }));
 
 if (Meteor.isServer) {
@@ -55,11 +60,17 @@ if (Meteor.isServer) {
         },
         deleteDevice: function (deviceId) {
           var device = Devices.findOne({UUID:deviceId});
-          if (device.owner.userId!== Meteor.userId()) {
+          var isOwner = false;
+          for (var i = device.owner.length - 1; i >= 0; i--) {
+            if (device.owner[i].email === Meteor.user().emails[0].address)
+              Devices.remove(device._id);
+              isOwner = true;
+            }
+          if (!isOwner) {
             // If the task is private, make sure only the owner can delete it
-            throw new Meteor.Error("not-authorized");
+            throw new Meteor.Error("you are not-authorized "+device.owner.userId);
           }
-          Devices.remove(device._id);
+          
 
         },
         getAdminUser: function(){
@@ -86,16 +97,6 @@ if (Meteor.isServer) {
     }
     });
     Devices.permit(['insert', 'update', 'remove']).ifLoggedIn().apply();
-
-    // Meteor.publish("userData", function () {
-    //   var currId = this.userId;
-    //   if (currId !== null)
-    //   return Meteor.users.find({_id: currId}, {fields: {'other': 1, 'things': 1}});
-    // });
-    // Meteor.publish("allUserData", function () {
-    //   return Meteor.users.find({}, {fields: {'nested.things': 1}});
-    // });
-    //Meteor.users.permit('update').apply();
 }
 
 if(Meteor.isClient) {

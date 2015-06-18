@@ -25,3 +25,7 @@ d3
 underscore
 meteorhacks:kadira-debug
 momentjs:moment
+mdg:camera
+mdg:geolocation
+cfs:standard-packages
+cfs:gridfs

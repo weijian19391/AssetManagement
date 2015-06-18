@@ -7,16 +7,24 @@
         <button type="submit" class="button button-clear">Add</button>
       </div>
       <div class="content has-header overflow-scroll">
-      <fieldset>
-      <div class="list card">
-              {{> afQuickField name='model' options="allowed"}}
-              {{> afQuickField name='UUID'}}
-              {{> afQuickField name='sensors' options=numSelectOptions}}
-              {{> afQuickField name='locate'}}
-              {{> afQuickField name='owner'}}
-              {{> afQuickField name='viewer'}}
-      </div>
-      </fieldset>
+        <fieldset>
+          <div class="list card">
+            {{> afQuickField name='model' options="allowed"}}
+            {{> afQuickField name='UUID'}}
+            {{> afQuickField name='sensors' options=numSelectOptions}}
+            {{> afQuickField name='locate'}}
+            {{> afQuickField name='owner'}}
+            {{> afQuickField name='viewer'}}
+            <input type="file" name="…" class="myFileInput">
+            {{#each images}}
+              {{#with url}}
+                <div>
+                  <a href="{{this}}" target="_blank"><img src="{{this}}" /></a>
+                </div>
+              {{/with}}
+            {{/each}}
+          </div>
+        </fieldset>
       </div>
     {{/autoForm}}
   {{/ionModal}}
