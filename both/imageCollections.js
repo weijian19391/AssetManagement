@@ -1,7 +1,20 @@
-var imageStore = new FS.Store.GridFS("images");
+// var imageStore = new FS.Store.GridFS("images");
 
 Images = new FS.Collection("images", {
- stores: [imageStore]
+	stores: [
+	 	new FS.Store.GridFS("images", {
+	    	transformWrite: function(fileObj, readStream, writeStream) {
+	       // Transform the image into a 10x10px thumbnail
+	       	gm(readStream, fileObj.name()).resize('200', '200').stream().pipe(writeStream);
+	    	}
+	   	}),
+	   	new FS.Store.GridFS("thumbs", {
+	    	transformWrite: function(fileObj, readStream, writeStream) {
+	       // Transform the image into a 10x10px thumbnail
+	       	gm(readStream, fileObj.name()).resize('70', '70').stream().pipe(writeStream);
+	    	}
+	   	})
+   	]
 });
 
 if (Meteor.isServer) {

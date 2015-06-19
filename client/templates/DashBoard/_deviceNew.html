@@ -15,11 +15,11 @@
             {{> afQuickField name='locate'}}
             {{> afQuickField name='owner'}}
             {{> afQuickField name='viewer'}}
-            <input type="file" name="…" class="myFileInput">
+            <input type="file" name="uploadPictures" class="myFileInput">
             {{#each images}}
               {{#with url}}
                 <div>
-                  <a href="{{this}}" target="_blank"><img src="{{this}}" /></a>
+                  <a href="{{this}}" target="_blank"><img src="{{this uploading='/images/uploading.gif' storing='/images/storing.gif'}}" /></a>
                 </div>
               {{/with}}
             {{/each}}

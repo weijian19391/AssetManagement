@@ -17,6 +17,11 @@ Template.dashBoard.onRendered = function () {
 Template.dashBoard.helpers({
   devices: function () {
     return Devices.find();
+  },
+  thumbnail: function() {
+    console.log(this);
+    thumbnailId = this.imageId[0];
+    return Images.find(thumbnailId);
   }
 });
 

@@ -24,7 +24,10 @@
         {{/contentFor}}
             {{#ionList}}
              {{#each devices}}
-                {{#ionItem path="deviceInfo" class="item-button-right" }}
+                {{#ionItem path="deviceInfo" class="item-button-right" avatar=true }}
+                  {{#each thumbnail}}
+                      <img src="{{this.url store="thumbs"}}" />
+                  {{/each}}
                   <h2>{{model}}</h2>
                   <p>{{locate}}</p>
                   {{#if viewOnly viewer}}

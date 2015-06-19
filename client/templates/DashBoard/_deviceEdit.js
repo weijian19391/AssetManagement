@@ -10,7 +10,6 @@ AutoForm.hooks({
     onSuccess: function (operation, result, template) {
       IonModal.close();
     },
-
     onError: function(operation, error, template) {
       alert(error);
     }

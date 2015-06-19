@@ -29,3 +29,5 @@ mdg:camera
 mdg:geolocation
 cfs:standard-packages
 cfs:gridfs
+cfs:graphicsmagick
+cfs:filesystem
