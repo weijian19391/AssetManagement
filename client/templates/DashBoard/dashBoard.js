@@ -19,9 +19,11 @@ Template.dashBoard.helpers({
     return Devices.find();
   },
   thumbnail: function() {
-    console.log(this);
-    thumbnailId = this.imageId[0];
-    return Images.find(thumbnailId);
+    if (this.imageId){
+      // console.log("inside dashboard.helper, collection is " + this.imageId);
+      thumbnailId = this.imageId[0];
+      return Images.find(thumbnailId);
+    }
   }
 });
 

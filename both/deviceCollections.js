@@ -47,7 +47,7 @@ Devices.attachSchema(new SimpleSchema({
   },
   imageId: {
     type: [String],
-    optional: true
+    optional: true,
   }
 
 }));
@@ -58,14 +58,18 @@ if (Meteor.isServer) {
             this.unblock();
             return Meteor.http.call("GET", "https://rpidemo.mybluemix.net/api/temp/list");
         },
-        deleteDevice: function (deviceId) {
-          var device = Devices.findOne({UUID:deviceId});
+        deleteDevice: function (deviceUUId) {
+          var device = Devices.findOne({UUID:deviceUUId});
           var isOwner = false;
           for (var i = device.owner.length - 1; i >= 0; i--) {
-            if (device.owner[i].email === Meteor.user().emails[0].address)
+            if (device.owner[i].email === Meteor.user().emails[0].address){
+              for (var j = 0; j < device.imageId.length; j++) {
+                Meteor.call("deletePicture",device.imageId[j]);
+              }
               Devices.remove(device._id);
-              isOwner = true;
             }
+            isOwner = true;
+          }
           if (!isOwner) {
             // If the task is private, make sure only the owner can delete it
             throw new Meteor.Error("you are not-authorized "+device.owner.userId);

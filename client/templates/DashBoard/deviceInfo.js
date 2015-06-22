@@ -53,6 +53,7 @@ Template.registerHelper('viewOnly', function (device_viewers) {
 
 Template.registerHelper('haveImage', function (imageArray) {
   if (imageArray){
+    // console.log(imageArray);
     Session.set('imageArr', imageArray);
     return true;
   }else{

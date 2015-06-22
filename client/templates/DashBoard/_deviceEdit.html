@@ -1,5 +1,7 @@
 <template name="_deviceEdit">
   {{#ionModal customTemplate=true}}
+  {{#ionView}}
+<!--     {{#ionContent}} -->
     {{#autoForm collection="Devices" doc=device id="device-edit-form" type="update"}}
       <div class="bar bar-header bar-stable">
         <button data-dismiss="modal" type="button" class="button button-clear">Cancel</button>
@@ -7,13 +9,37 @@
         <button type="submit" class="button button-positive button-clear">Save</button>
       </div>
       <div class="content has-header overflow-scroll">
-        {{> afQuickField name='model' options="allowed" }}
-        {{> afQuickField name='UUID'}}
-        {{> afQuickField name='sensors' options=numSelectOptions}}
-        {{> afQuickField name='locate'}}
-        {{> afQuickField name='owner'}}
-        {{> afQuickField name='viewer'}}
-      </div>
+        <fieldset>
+          <div class="list card">
+            {{> afQuickField name='model' options="allowed" }}
+            {{> afQuickField name='UUID'}}
+            {{> afQuickField name='sensors' options=numSelectOptions}}
+            {{> afQuickField name='locate'}}
+            {{> afQuickField name='owner'}}
+            {{> afQuickField name='viewer'}}
+            <input type="file" id="uploadPictures" class="myFileInput" style="display: none;">
+            <button type="button" class="button button-positive button-block" data-action="addPictures">Upload Pictures</button>
+           
+            {{#ionList}}
+               {{#each images}}
+               <div class="list card">
+                {{#ionItem class="item-button-right"}}
+                 {{#with url}}
+                    <div>
+                      <a href="{{this}}" target="_blank"><img src="{{this uploading='/images/uploading.gif' storing='/images/storing.gif'}}" /></a>
+                    </div>
+                  {{/with}}
+                  {{ >_deletePictureButton}}
+                  {{/ionItem}}
+                  </div>
+                {{/each}}
+              {{/ionList}}
+
+          </div>
+        </fieldset>
+      </div>   
     {{/autoForm}}
+    <!-- {{/ionContent}} -->
+      {{/ionView}}
   {{/ionModal}}
 </template>
