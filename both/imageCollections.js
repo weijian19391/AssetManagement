@@ -1,21 +1,29 @@
-// var imageStore = new FS.Store.GridFS("images");
 
-Images = new FS.Collection("images", {
+if (deployedToMeteor) {
+	Images = new FS.Collection("images", {
+		stores: [
+		 	new FS.Store.GridFS("images", {
+		   	}),
+		  new FS.Store.GridFS("thumbs", {
+		   	})
+	   	]
+	});
+}else{
+	Images = new FS.Collection("images", {
 	stores: [
 	 	new FS.Store.GridFS("images", {
-	    	transformWrite: function(fileObj, readStream, writeStream) {
-	       // Transform the image into a 10x10px thumbnail
-	       	gm(readStream, fileObj.name()).resize('200', '200').stream().pipe(writeStream);
-	    	}
-	   	}),
-	   	new FS.Store.GridFS("thumbs", {
-	    	transformWrite: function(fileObj, readStream, writeStream) {
-	       // Transform the image into a 10x10px thumbnail
-	       	gm(readStream, fileObj.name()).resize('70', '70').stream().pipe(writeStream);
-	    	}
-	   	})
-   	]
+    	transformWrite: function(fileObj, readStream, writeStream) {
+      	gm(readStream, fileObj.name()).resize('200', '200').stream().pipe(writeStream);
+      }
+	  }),
+	  new FS.Store.GridFS("thumbs", {
+    	transformWrite: function(fileObj, readStream, writeStream) {
+       	gm(readStream, fileObj.name()).resize('70', '70').stream().pipe(writeStream);
+    	}
+   	})
+	]
 });
+}
 
 if (Meteor.isServer) {
 	Meteor.methods({
