@@ -1,0 +1,41 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs',
+1 verbose cli   '/usr/bin/npm',
+1 verbose cli   'owner',
+1 verbose cli   'ls',
+1 verbose cli   'AssetManagement' ]
+2 info using npm@1.3.10
+3 info using node@v0.10.25
+4 verbose url raw AssetManagement
+5 verbose url resolving [ 'https://registry.npmjs.org/', './AssetManagement' ]
+6 verbose url resolved https://registry.npmjs.org/AssetManagement
+7 info trying registry request attempt 1 at 15:14:27
+8 http GET https://registry.npmjs.org/AssetManagement
+9 http 404 https://registry.npmjs.org/AssetManagement
+10 silly registry.get cb [ 404,
+10 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+10 silly registry.get     'content-type': 'application/json',
+10 silly registry.get     'cache-control': 'max-age=0',
+10 silly registry.get     'content-length': '51',
+10 silly registry.get     'accept-ranges': 'bytes',
+10 silly registry.get     date: 'Fri, 26 Jun 2015 07:14:27 GMT',
+10 silly registry.get     via: '1.1 varnish',
+10 silly registry.get     age: '0',
+10 silly registry.get     connection: 'keep-alive',
+10 silly registry.get     'x-served-by': 'cache-sin6927-SIN',
+10 silly registry.get     'x-cache': 'MISS',
+10 silly registry.get     'x-cache-hits': '0',
+10 silly registry.get     'x-timer': 'S1435302867.366183,VS0,VE205' } ]
+11 error owner ls Couldn't get owner data AssetManagement
+12 error 404 'AssetManagement' is not in the npm registry.
+12 error 404 You should bug the author to publish it
+12 error 404
+12 error 404 Note that you can also install from a
+12 error 404 tarball, folder, or http url, or git url.
+13 error System Linux 3.16.0-41-generic
+14 error command "/usr/bin/nodejs" "/usr/bin/npm" "owner" "ls" "AssetManagement"
+15 error cwd /home/leongweijian/WebApp/Meteor/AssetManagement
+16 error node -v v0.10.25
+17 error npm -v 1.3.10
+18 error code E404
+19 verbose exit [ 1, true ]
