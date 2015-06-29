@@ -80,7 +80,7 @@ mongo@1.1.0
 mongo-livedata@1.0.8
 npm-bcrypt@0.7.8_2
 observe-sequence@1.0.6
-ongoworks:security@1.1.0
+ongoworks:security@1.2.0
 ordered-dict@1.0.3
 raix:eventemitter@0.1.2
 random@1.0.3
