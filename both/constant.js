@@ -1,4 +1,4 @@
 //in imageCollection.js
-deployedToMeteor = false;
-//in _deviceNew.js
+deployedToMeteor = true;
+//in _deviceNew
 fromCamera = true;
