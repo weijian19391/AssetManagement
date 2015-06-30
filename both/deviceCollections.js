@@ -78,7 +78,7 @@ if (Meteor.isServer) {
 
         },
         getAdminUser: function(){
-          return Meteor.users.find({_id:"qNLTjCFJZ72NzwDf7"}).fetch();
+          return Meteor.users.find({_id:"XQrz7pN2JuyNE3tia"}).fetch();
         }
     });
     Meteor.call("getAdminUser", function(error, results) {
