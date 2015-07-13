@@ -4,8 +4,8 @@ Template._deviceEdit.helpers({
 		return Devices.findOne({_id: template.data.id});
 	},
 	images: function() {
-		console.log(Images.find({$or: [{_id:{$in:Session.get('imageArr')}}, {temp:true}]}));
-		return (Images.find({$or: [{_id:{$in:Session.get('imageArr')}}, {temp:true}]}));
+		console.log(Images.find({$or: [{_id:{$in:Session.get('imageIdArrEdit')}}, {temp:true}]}));
+		return (Images.find({$or: [{_id:{$in:Session.get('imageIdArrEdit')}}, {temp:true}]}));
 	}
 });
 
@@ -60,9 +60,10 @@ Template.registerHelper('haveImages', function (imageArray) {
 	console.log("inside helper for _deviceEdit");
 	if (imageArray){
 		console.log("image array is : " + imageArray);
-		Session.set('imageArr', imageArray);
+		Session.set('imageIdArrEdit', imageArray);
 		return true;
 	}else{
+		Session.set('imageIdArrEdit', []);
 		return false;
 	}
 });

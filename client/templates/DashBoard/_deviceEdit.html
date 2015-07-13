@@ -30,7 +30,11 @@
 						</div>
 					 
 						{{#ionList}}
-							 {{#each images}}
+							{{#with device}}
+								{{#if haveImages imageId}}
+								{{/if}}
+							{{/with}}
+							{{#each images}}
 							 <div class="list card">
 								{{#ionItem class="item-button-right"}}
 								 {{#with url}}

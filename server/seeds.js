@@ -1,5 +1,5 @@
-// Meteor.startup(function () {
-//     Images.remove({});
-//     Devices.remove({});
+Meteor.startup(function () {
+    Images.remove({});
+    Devices.remove({});
 
-// });
+});
