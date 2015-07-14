@@ -24,7 +24,7 @@ Devices.attachSchema(new SimpleSchema({
   },
   'sensors.$.type':{
     type: String,
-    allowedValues: ["light", "Temperature", "humidity", "pressure","Accelerometer", "gyroscope"]
+    allowedValues: ["light", "Ambient Temperature", "humidity", "Air pressure","Accelerometer", "gyroscope", "Battery Voltage"]
   },
   locate: {
     type: String,
@@ -53,18 +53,39 @@ Devices.attachSchema(new SimpleSchema({
 }));
 
 if (Meteor.isServer) {
+  
     Meteor.methods({
-        checkdata: function () {
+        getSensorData: function(deviceModel,deviceUUId,deviceSensors) {
             this.unblock();
-            return Meteor.http.call("GET", "https://rpidemo.mybluemix.net/api/temp/list");
-        },
+            // console.log("my device id in getSensorData is " + deviceUUId + "device model is " + deviceModel);
+            var baseUrl = bluemixUrl;
+            var deviceModelString = "";
+            var dataArr = [];     // use to consolidate all the sensor data into one return statement.
+            var sensorType = "";  // use to translate what is being shown to the user, to what is being used in the restful url
+            if (deviceModel === "TI Sensor Tag 2.0") {
+              deviceModelString = "TI_SensorTag";
+              // console.log("device sensor length is " + deviceSensors.length);
+              for (var j=0; j<deviceSensors.length; j++){
+                sensorType = deviceSensors[j].type.replace(/\s+/g, '');
+                var restUrl = baseUrl + deviceModelString + "/" + deviceUUId + "/" + sensorType;
+                var dataReturn = Meteor.http.call("GET", restUrl);
+                // console.log("results of http call is " + dataReturn + " rest url is " + restUrl);
+                dataArr.push({
+                	sensorType: dataReturn
+                });
+              }
+            }
+            return dataArr;
+          },
         deleteDevice: function (deviceUUId) {
           var device = Devices.findOne({UUID:deviceUUId});
           var isOwner = false;
           for (var i = device.owner.length - 1; i >= 0; i--) {
             if (device.owner[i].email === Meteor.user().emails[0].address){
-              for (var j = 0; j < device.imageId.length; j++) {
-                Meteor.call("deletePicture",device.imageId[j]);
+              if (device.imageId) {
+                for (var j = 0; j < device.imageId.length; j++) {
+                  Meteor.call("deletePicture",device.imageId[j]);
+                }
               }
               Devices.remove(device._id);
             }
@@ -108,3 +129,5 @@ if(Meteor.isClient) {
   // Meteor.subscribe("userData");
   // Meteor.subscribe("allUserData");
 }
+
+

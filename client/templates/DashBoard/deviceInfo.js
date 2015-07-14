@@ -2,8 +2,23 @@ Template.deviceInfo.created = function () {
   this.autorun(function () {
     this.subscription = Meteor.subscribe('devices', Router.current().params._id);
   }.bind(this));
+
+  this.handle = Meteor.setInterval(function(){
+    var currentDevice = Devices.findOne({_id: Router.current().params._id});
+    Meteor.call("getSensorData",currentDevice.model,currentDevice.UUID,currentDevice.sensors, function(error, results) {
+    	var dataReturn = JSON.parse(results[0].sensorType.content);
+    	// console.log(dataReturn);
+    	for (var i=0; i<dataReturn.length; i++){
+  			Session.set(dataReturn[i].SensorType, dataReturn[i]);
+  			//console.log(Session.get(dataReturn[i].SensorType));
+    	}
+    });
+  },500);
 };
 
+Template.deviceInfo.destroyed = function() {
+  Meteor.clearInterval(this.handle); //this function is to stop the interval from running once we are out of the device page 
+};
 Template.deviceInfo.rendered = function () {
   this.autorun(function () {
     if (!this.subscription.ready()) {
@@ -22,12 +37,9 @@ Template.deviceInfo.helpers({
     // console.log(Session.get('imageArr'));
     return (Images.find({_id:{$in:Session.get('imageArr')}}));
   },
-  getData: function(){
-    Meteor.call("checkdata", function(error, results) {
-      Session.set('data', JSON.parse(results.content).d);
-    });
-    return (Session.get('data'));
-  },
+  // getAirPressure: function(){
+  //   return (Session.get('airPressureData'));
+  // },
   deviceId: function(){
     return Router.current().params._id;
   }

@@ -52,17 +52,12 @@
           </div>
 
           <div class="item item-body">
-            <h4>Sensors Information</h4>
+            <h3>Sensors Information</h3>
             <p>
               {{#each device.sensors}}
-                {{#if equals type "Temperature"}} 
                   {{type}} :
-                  {{> chartDisplay}}
-                  {{type}} : {{getData.cputemp}}
-                {{/if}}
-                {{#if equals type "pressure"}} 
-                  {{type}} :
-                {{/if}}
+                  {{> chartDisplay sensorType=type}}
+                  {{type}} : {{getData}}
                 <br>
                 {{/each}}
             </p>
