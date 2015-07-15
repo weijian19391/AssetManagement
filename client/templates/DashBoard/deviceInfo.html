@@ -22,10 +22,10 @@
         <div class="list card">
           <div class="item item-divider">
             <h2>{{device.model}}</h2>
-            <p>{{device.locate}}</p>
+            <p> Location: {{device.locate}}</p>
           </div>
           <div class="item item-body">
-            <h3>Device Information</h3>
+            <h2>Device Information: </h2>
             {{#if haveImage imageId}}
               {{#each image}}
                 {{#with url}}
@@ -35,15 +35,15 @@
                   {{/with}}
                 {{/each}}
             {{/if}}
-            <p>
-              <b>Owners of device:</b>
+            <p style="color:black">
+              Owners of device:
               {{#each device.owner}}
               <br>
               {{email}}
               {{/each}}
             </p>
-            <p>
-              <b>Viewers of device:</b>
+            <p style="color:black">
+              Viewers of device:
               {{#each device.viewer}}
               <br>
               {{email}}
@@ -52,12 +52,11 @@
           </div>
 
           <div class="item item-body">
-            <h3>Sensors Information</h3>
+            <h2>Sensors Information</h2>
             <p>
               {{#each device.sensors}}
                   {{type}} :
                   {{> chartDisplay sensorType=type}}
-                  {{type}} : {{getData}}
                 <br>
                 {{/each}}
             </p>

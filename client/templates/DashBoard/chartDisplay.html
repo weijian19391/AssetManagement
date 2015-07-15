@@ -1,5 +1,6 @@
 <template name="chartDisplay">
-	<div class="ct-chart ct-perfect-fourth"></div>
-	<!-- {{getInfo}} -->
-	{{setSensorType sensorType}} <!--sensorType is a variable passed from the parent of this template-->
+	<div class="ct-chart ct-perfect-fourth" id='{{removeSpace sensorType}}'></div>
+	{{setSensorType sensorType}}
+	{{updateChart sensorType}}
+	
 </template>

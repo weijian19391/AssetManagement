@@ -24,7 +24,7 @@ Devices.attachSchema(new SimpleSchema({
   },
   'sensors.$.type':{
     type: String,
-    allowedValues: ["light", "Ambient Temperature", "humidity", "Air pressure","Accelerometer", "gyroscope", "Battery Voltage"]
+    allowedValues: ["light", "Ambient Temperature", "Humidity", "Air pressure","Accelerometer", "gyroscope", "Battery Voltage"]
   },
   locate: {
     type: String,
@@ -75,6 +75,7 @@ if (Meteor.isServer) {
                 });
               }
             }
+            // console.log(dataArr);
             return dataArr;
           },
         deleteDevice: function (deviceUUId) {

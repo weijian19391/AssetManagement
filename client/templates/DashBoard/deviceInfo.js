@@ -6,11 +6,11 @@ Template.deviceInfo.created = function () {
   this.handle = Meteor.setInterval(function(){
     var currentDevice = Devices.findOne({_id: Router.current().params._id});
     Meteor.call("getSensorData",currentDevice.model,currentDevice.UUID,currentDevice.sensors, function(error, results) {
-    	var dataReturn = JSON.parse(results[0].sensorType.content);
-    	// console.log(dataReturn);
-    	for (var i=0; i<dataReturn.length; i++){
-  			Session.set(dataReturn[i].SensorType, dataReturn[i]);
-  			//console.log(Session.get(dataReturn[i].SensorType));
+    	for(var j=0; j<results.length; j++) {
+    		var data = JSON.parse(results[j].sensorType.content);
+    		Session.set(data[0].SensorType, data[0]);
+    		// console.log(Session.get(data[0].SensorType));
+    		// console.log(data);
     	}
     });
   },500);
