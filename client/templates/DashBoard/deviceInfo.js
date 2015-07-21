@@ -3,21 +3,24 @@ Template.deviceInfo.created = function () {
     this.subscription = Meteor.subscribe('devices', Router.current().params._id);
   }.bind(this));
 
-  this.handle = Meteor.setInterval(function(){
-    var currentDevice = Devices.findOne({_id: Router.current().params._id});
-    Meteor.call("getSensorData",currentDevice.model,currentDevice.UUID,currentDevice.sensors, function(error, results) {
-    	for(var j=0; j<results.length; j++) {
-    		var data = JSON.parse(results[j].sensorType.content);
-    		Session.set(data[0].SensorType, data[0]);
-    		// console.log(Session.get(data[0].SensorType));
-    		// console.log(data);
-    	}
-    });
-  },500);
+  // this.handle = Meteor.setInterval(function(){
+  //   var currentDevice = Devices.findOne({_id: Router.current().params._id});
+  //   Meteor.call("getSensorDataWebSoc",currentDevice.model,currentDevice.UUID,currentDevice.sensors, function(error, results) {
+  //   	// for(var j=0; j<results.length; j++) {
+  //   	// 	var data = JSON.parse(results[j].sensorType.content);
+  //   	// 	Session.set(data[0].SensorType, data[0]);
+  //   	// 	// console.log(Session.get(data[0].SensorType));
+  //   	// 	// console.log(data);
+  //   	// }
+  //   	// console.log(error);
+  //   	// console.log(results);
+  //   });
+  // },500);
+
 };
 
 Template.deviceInfo.destroyed = function() {
-  Meteor.clearInterval(this.handle); //this function is to stop the interval from running once we are out of the device page 
+  
 };
 Template.deviceInfo.rendered = function () {
   this.autorun(function () {
@@ -37,12 +40,25 @@ Template.deviceInfo.helpers({
     // console.log(Session.get('imageArr'));
     return (Images.find({_id:{$in:Session.get('imageArr')}}));
   },
-  // getAirPressure: function(){
-  //   return (Session.get('airPressureData'));
-  // },
+  fetchRemoteCollection: function(deviceUUID){ // deviceUUID is the name of the collection in IBM DB
+  	try {
+      Meteor.call('checkDatabase', deviceUUID, function(error, result) {
+        // console.log(result);
+      });
+    } catch (err){
+      console.log("database existed");
+    }
+    //return SensorDatabase.find();
+  },
   deviceId: function(){
     return Router.current().params._id;
-  }
+  },
+  // getData: function(){
+  // 	var currentDevice = Devices.findOne({_id: Router.current().params._id});
+  // 	Meteor.call("getSensorDataWebSoc",currentDevice.model,currentDevice.UUID,currentDevice.sensors, function(error, results) {
+  // 		console.log('calling web soc fx');
+  // 	});
+  // }
 });
 
 Template.registerHelper('equals', function (a, b) {

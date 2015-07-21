@@ -28,8 +28,8 @@
                   {{#each thumbnail}}
                       <img src="{{this.url store="thumbs"}}" />
                   {{/each}}
-                  <h2>{{model}}</h2>
-                  <p>{{locate}}</p>
+                  <h2>{{model}} : {{UUID}}</h2>
+                  <p>Location: {{locate}}</p>
                   {{#if viewOnly viewer}}
                     <icon class="button button-clear">{{> ionIcon icon="ios-eye"}}</icon>
                   {{else}}
