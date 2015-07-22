@@ -26,7 +26,8 @@
              {{#each devices}}
                 {{#ionItem path="deviceInfo" class="item-button-right" avatar=true }}
                   {{#each thumbnail}}
-                      <img src="{{this.url store="thumbs"}}" />
+                      <!-- <img src="{{this.url store="thumbs"}}" /> -->
+                      <img src="{{this.url}}" />
                   {{/each}}
                   <h2>{{model}} : {{UUID}}</h2>
                   <p>Location: {{locate}}</p>

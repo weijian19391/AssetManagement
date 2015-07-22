@@ -1,28 +1,24 @@
 
 Template.chartDisplay.onCreated(function() {
-	this.myChart = new ReactiveVar(new Chartist.Line());
+	this.myChart = new ReactiveVar(new Chartist.Line()); // setting mychart as a variable of the template, so that i can reference it to update it later.
 
 	query = {"recordDate": Session.get("todayDate")};
 	myUUID = this.data.deviceUUID;
+	Session.setPersistent(myUUID+"query", query);
 	console.log(myUUID);
 	Meteor.call('publishCollection',myUUID, function(error, result){
 	});
-	
-	// this.subscribe(this.data.deviceUUID);
 	//using package to check if collection exist
 	if(!Mongo.Collection.get(this.data.deviceUUID)){
-		SensorDatabase = new Meteor.Collection(this.data.deviceUUID);
+		SensorDatabase = new Meteor.Collection(myUUID);
 	}else{
-		SensorDatabase = Mongo.Collection.get(this.data.deviceUUID);
+		SensorDatabase = Mongo.Collection.get(myUUID);
 	}
-	Meteor.subscribe(this.data.deviceUUID, query);
+	Tracker.autorun(function () {
+	  Meteor.subscribe(myUUID, Session.get(myUUID+"query"));
+	});
+	
 	console.log(SensorDatabase.find().fetch());
-	// Session.set("tempReady", 0);
-	//init the graph
-	// Session.setPersistent(this.data.sensorType+'time', [0,0,0,0,0]);
- // 	Session.setPersistent(this.data.sensorType+'CurrData',[0,0,0,0,0]);
- // 	console.log(Session.get(this.data.sensorType+'time'));
- // 	console.log(Session.get(this.data.sensorType+'CurrData'));
 });
 
 Template.chartDisplay.helpers({
@@ -40,10 +36,10 @@ Template.chartDisplay.helpers({
 		var curr_date = timeCheck.getDate();
 		var curr_month = timeCheck.getMonth() + 1;
 		var curr_year = timeCheck.getFullYear();
-		var dayMonthYear = curr_date + '-' +
+		var yearMonthDay = curr_year + '-' +
 		                   curr_month + '-' +
-		                   curr_year;
-		Session.set("todayDate", dayMonthYear);
+		                   curr_date;
+		Session.set("todayDate", yearMonthDay);
 	},
 	setSensorType: function(sensorType){
 		// console.log("my sensor type is " + sensorType);
@@ -52,31 +48,29 @@ Template.chartDisplay.helpers({
 		var interval;
 		var dataArr;
 		var timeArr = [];// the time array that will be used to plot the graph
-		if (sensorType === "Ambient Temperature") {
-			ambTempDoc = SensorDatabase.find({"SensorType":"ambTemp"}).fetch();//if i don't put .fetch, it returns me the full collection.0
-			console.log(ambTempDoc);
-			if(ambTempDoc.length !== 0) {
-				Session.set("tempReady", 1);
-				console.log(ambTempDoc.length);
-				interval = ambTempDoc[0].interval;
-				timeObj = new Date(ambTempDoc[0].timestamp);
-				dataArr = ambTempDoc[0].SensorData;
-				numData = ambTempDoc[0].numData;
-				Session.set("RTData"+sensorType, dataArr[dataArr.length-1]);
-			}
+		var currentDoc;
+		if(sensorType === "Ambient Temperature") {
+			currentDoc = SensorDatabase.find({"SensorType":"ambTemp"}).fetch();//if i don't put .fetch, it returns me the full collection.0
+		}else if(sensorType === "Humidity") {
+			currentDoc = SensorDatabase.find({"SensorType":"HDCHumidity"}).fetch();//if i don't put .fetch, it returns me the full collection.0
+		}else if(sensorType === "Light") {
+			currentDoc = SensorDatabase.find({"SensorType":"lux"}).fetch();
+		}else if(sensorType === "Battery Temperature") {
+			currentDoc = SensorDatabase.find({"SensorType":"battTemp"}).fetch();
+		}else if(sensorType === "Air pressure") {
+			currentDoc = SensorDatabase.find({"SensorType":"airPressure"}).fetch();
+		}else if(sensorType === "Battery Voltage") {
+			currentDoc = SensorDatabase.find({"SensorType":"battLvl"}).fetch();
 		}
-
-		if (sensorType === "Humidity") {
-			humidityDoc = SensorDatabase.find({"SensorType":"HDCHumidity"}).fetch();//if i don't put .fetch, it returns me the full collection.0
-			console.log(humidityDoc);
-			if(humidityDoc.length !== 0) {
-				console.log(humidityDoc.length);
-				interval = humidityDoc[0].interval;
-				timeObj = new Date(humidityDoc[0].timestamp);
-				dataArr = humidityDoc[0].SensorData;
-				numData = humidityDoc[0].numData;
-				Session.set("RTData"+sensorType, dataArr[dataArr.length-1]);
-			}
+		console.log(currentDoc);
+		if(currentDoc.length !== 0) {
+			console.log(currentDoc.length);
+			interval = currentDoc[0].interval;
+			timeObj = new Date(currentDoc[0].timestamp);
+			dataArr = currentDoc[0].SensorData;
+			numData = currentDoc[0].numData;
+			Session.setPersistent("RTData"+sensorType, dataArr[dataArr.length-1]);
+			Session.setPersistent("Unit"+sensorType, currentDoc[0].unit);
 		}
 		// console.log(dataObjArr);
 		Session.setPersistent(sensorType+'CurrData', dataArr);
@@ -104,17 +98,19 @@ Template.chartDisplay.helpers({
 		  ]
 		};
 		if(s === undefined) {
-			console.log("inside s undefined");
+			console.log("still fetching data from collection");
 
 		}else{
 			Template.instance().myChart.get().update(data);			
 		}
 
-		// console.log(myChart.get());
 	},
 	//this function is needed because somehow the chartist doesn't play well with spaces in id.
 	removeSpace: function(string) {
 		return string.replace(/\s+/g, '');
+	},
+	getUnit: function(sensorType){
+		return Session.get("Unit"+sensorType);
 	}
 });
 
@@ -122,16 +118,6 @@ Template.chartDisplay.helpers({
 Template.chartDisplay.onRendered(function(){
 	var t = Session.get(this.data.sensorType+'time');
  	var s = Session.get(this.data.sensorType+'CurrData');
- // 	console.log("t is " + t + this.data.sensorType);
-	// console.log("s is " + s);
-	// if (!s) {
-	// 	console.log("inside not t");
-	// 	t = [0,1,2,3,4];
-	// 	s = [0,0,0,0,0];
-	// }
-	//  	console.log("t is " + t + this.data.sensorType);
-	// console.log("s is " + s);
-
 	var data = {
 	  // A labels array that can contain any sort of values
 	  labels: [0,1,2,3,4],
@@ -142,9 +128,9 @@ Template.chartDisplay.onRendered(function(){
 	};
 	var options = {
 	  // Don't draw the line chart points
-	  showPoint: true,
+	  showPoint: false,
 	  // Disable line smoothing
-	  lineSmooth: false,
+	  lineSmooth: true,
 	  // X-Axis specific configuration
 	  updateOnData : true,
 	  axisX: {
@@ -170,9 +156,6 @@ Template.chartDisplay.onRendered(function(){
 	  }
 	};
 	var currid = '#'+this.data.sensorType.replace(/\s+/g, '');
-	
-	// console.log(currid);
-	// console.log(Template.instance().myChart);
 	Template.instance().myChart.set(new Chartist.Line(currid, data, options));
 
 });

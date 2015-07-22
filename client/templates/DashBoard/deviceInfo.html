@@ -58,9 +58,11 @@
             <h2>Sensors Information</h2>
             <p>
               {{#each device.sensors}}
+              	<p style="color:black">
                   {{type}} :
                   {{> chartDisplay sensorType=type deviceUUID=device.UUID}}
                 <br>
+                </p>
                 {{/each}}
             </p>
           </div>

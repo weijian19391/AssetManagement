@@ -1,10 +1,11 @@
 if (Meteor.isServer) {
+	collectionPublished = [];
   Meteor.methods({
     checkDatabase: function (collectionId) {
       if(!Mongo.Collection.get(collectionId)){
         var mongoUrl = 'mongodb://weijian:weijian@ds041180.mongolab.com:41180/IbmCloud_rv14ar9q_c981hbsq';
         // var oplogUrl = 'mongodb://127.0.0.1:3001/local';
-         var remoteDriver = new MongoInternals.RemoteCollectionDriver(mongoUrl);
+         remoteDriver = new MongoInternals.RemoteCollectionDriver(mongoUrl);
          //'humidity' is the name of the collection in IBM MongoDb
          sensorDatabase = new Mongo.Collection(collectionId, {_driver: remoteDriver});
          
@@ -13,11 +14,20 @@ if (Meteor.isServer) {
       }
     },
     publishCollection: function(collectionId){
-    	Meteor.publish(collectionId, function(query) {
-    	  // console.log(sensorDatabase.find().fetch());
-    	  // console.log(query);
-    	  return sensorDatabase.find(query);
-    	});
+    	var published = false;
+    	for (var i = 0; i < collectionPublished.length; i++) {
+    		if (collectionPublished[i] === collectionId){
+    			published = true;
+    		}
+    	}
+    	if (!published) {
+    		Meteor.publish(collectionId, function(query) {
+    		  // console.log(sensorDatabase.find().fetch());
+    		  // console.log(query);
+    		  collectionPublished.push(collectionId);
+    		  return sensorDatabase.find(query);
+    		});
+    	}
     }
   });
 }

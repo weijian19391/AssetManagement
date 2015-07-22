@@ -24,7 +24,7 @@ Devices.attachSchema(new SimpleSchema({
   },
   'sensors.$.type':{
     type: String,
-    allowedValues: ["light", "Ambient Temperature", "Humidity", "Air pressure","Accelerometer", "gyroscope", "Battery Voltage"]
+    allowedValues: ["Ambient Temperature", "Humidity", "Light", "Battery Temperature", "Air pressure", "Battery Voltage"]
   },
   locate: {
     type: String,

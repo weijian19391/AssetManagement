@@ -2,7 +2,10 @@
 
 Template._deviceNew.helpers({
 	ownerData: function () {
-		return {owner:[{email:Meteor.user().emails[0].address}]};
+		return {
+			owner:[{email:Meteor.user().emails[0].address}],
+			sensors: [{type:"Ambient Temperature"}, {type:"Humidity"}, {type:"Light"}, {type:"Battery Temperature"}, {type:"Air pressure"}, {type:"Battery Voltage"}]
+		};
 	},
 	images: function() {
 		// console.log(Images.find({temp:true}));
