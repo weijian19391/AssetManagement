@@ -12,15 +12,12 @@
 						<div class="list card">
 							{{> afQuickField name='model' options="allowed"}}
 							{{> afQuickField name='UUID'}}
-							{{> afQuickField name='sensors' options=numSelectOptions}}
 							{{> afQuickField name='locate'}}
+							{{> deviceCoordinateNew}}
+							{{> afQuickField name='sensors' options=numSelectOptions}}
 							{{> afQuickField name='owner'}}
 							{{> afQuickField name='viewer'}}
 							<input type="file" id="uploadPictures" class="myFileInput" style="display: none;">
-						<!-- 	<button type="button" class="button button-positive button-right icon-left" data-action="addPictures">
-								{{> ionIcon icon="android-upload" }}
-								Upload Pictures
-							</button> -->
 							<div class="button-bar">
 								<button type="button" class="button button-positive button-right icon-left" data-action="uploads">
 															{{> ionIcon icon="android-upload" }}

@@ -17,6 +17,10 @@ AutoForm.hooks({
 				Images.update({_id:newImagesDoc[i]._id}, {$set:{temp:false}});
 				Devices.update({_id:this.docId}, {$push:{imageId:newImagesDoc[i]._id}});
 			}
+			currentCoor = Session.get("myCoordinate");  
+			console.log(Session.get("myCoordinate"));
+			Devices.update({_id:this.docId},{$set:{coordinate:currentCoor}});
+			console.log(Devices.findOne({_id:this.docId}));
 			IonModal.close();
 		},
 		onError: function(operation, error, template) {

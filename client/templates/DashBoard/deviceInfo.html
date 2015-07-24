@@ -1,74 +1,75 @@
 <template name="deviceInfo">
-  {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="/" text="DashBoard"}}
-  {{/contentFor}}
+	{{#contentFor "headerButtonLeft"}}
+		{{>ionNavBackButton path="/" text="DashBoard"}}
+	{{/contentFor}}
 
-  {{#contentFor "headerTitle"}}
-    <h1 class="title">Details</h1>
-  {{/contentFor}}
+	{{#contentFor "headerTitle"}}
+		<h1 class="title">Details</h1>
+	{{/contentFor}}
 
 
-  {{#contentFor "headerButtonRight"}}
-    {{#if viewOnly device.viewer}}
-       <button class="button button-clear" data-ion-modal="_viewOnly">{{> ionIcon icon="ios-eye"}}</button>
-    {{else}}
-       <button class="button button-clear" data-ion-modal="_deviceEdit" data-id="{{device._id}}"> {{> ionIcon icon="edit"}} </button>
-    {{/if}}
-  {{/contentFor}}
+	{{#contentFor "headerButtonRight"}}
+		{{#if viewOnly device.viewer}}
+			 <button class="button button-clear" data-ion-modal="_viewOnly">{{> ionIcon icon="ios-eye"}}</button>
+		{{else}}
+			 <button class="button button-clear" data-ion-modal="_deviceEdit" data-id="{{device._id}}"> {{> ionIcon icon="edit"}} </button>
+		{{/if}}
+	{{/contentFor}}
 
-  {{#ionView}}
-    {{#ionContent class="padding"}}
-      {{#with device}}
-        <div class="list card">
-          <div class="item item-divider">
-            {{fetchRemoteCollection device.UUID}}
-            <h2>{{device.model}}</h2>
-            <p> Location: {{device.locate}}</p>
-            <p> UUID: {{device.UUID}}</p>
-          </div>
-          <div class="item item-body">
-            <h2>Device Information: </h2>
-            {{#if haveImage imageId}}
-              {{#each image}}
-                {{#with url}}
-                  <div>
-                    <a href="{{this}}" target="_blank"><img src="{{this}}" /></a>
-                  </div>
-                  {{/with}}
-                {{/each}}
-            {{/if}}
-            <p style="color:black">
-              Owners of device:
-              {{#each device.owner}}
-              <br>
-              {{email}}
-              {{/each}}
-            </p>
-            <p style="color:black">
-              Viewers of device:
-              {{#each device.viewer}}
-              <br>
-              {{email}}
-              {{/each}}
-            </p>
-          </div>
+	{{#ionView}}
+		{{#ionContent class="padding"}}
+			{{#with device}}
+				<div class="list card">
+					<div class="item item-divider">
+						{{fetchRemoteCollection device.UUID}}
+						<h2>{{device.model}}</h2>
+						<p> UUID: {{device.UUID}}</p>
+						<p> Location: {{device.locate}}</p>
+						<p> {{> deviceCoordinateShow deviceCoor=device.coordinate}}</p>
+					</div>
+					<div class="item item-body">
+						<h2>Device Information: </h2>
+						{{#if haveImage imageId}}
+							{{#each image}}
+								{{#with url}}
+									<div>
+										<a href="{{this}}" target="_blank"><img src="{{this}}" /></a>
+									</div>
+									{{/with}}
+								{{/each}}
+						{{/if}}
+						<p style="color:black">
+							Owners of device:
+							{{#each device.owner}}
+							<br>
+							{{email}}
+							{{/each}}
+						</p>
+						<p style="color:black">
+							Viewers of device:
+							{{#each device.viewer}}
+							<br>
+							{{email}}
+							{{/each}}
+						</p>
+					</div>
 
-          <div class="item item-body">
-          {{getData}}
-            <h2>Sensors Information</h2>
-            <p>
-              {{#each device.sensors}}
-              	<p style="color:black">
-                  {{type}} :
-                  {{> chartDisplay sensorType=type deviceUUID=device.UUID}}
-                <br>
-                </p>
-                {{/each}}
-            </p>
-          </div>
+					<div class="item item-body">
+					{{getData}}
+						<h2>Sensors Information</h2>
+						<p>
+							{{#each device.sensors}}
+								<p style="color:black">
+									{{type}} :
+									{{> chartDisplay sensorType=type deviceUUID=device.UUID}}
+								<br>
+								</p>
+								{{/each}}
+						</p>
+					</div>
 
-        </div>
-      {{/with}}
-    {{/ionContent}}
-  {{/ionView}}
+				</div>
+			{{/with}}
+		{{/ionContent}}
+	{{/ionView}}
 </template>

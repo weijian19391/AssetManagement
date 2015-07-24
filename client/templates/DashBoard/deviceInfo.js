@@ -1,4 +1,4 @@
-Template.deviceInfo.created = function () {
+Template.deviceInfo.onCreated(function () {
   this.autorun(function () {
     this.subscription = Meteor.subscribe('devices', Router.current().params._id);
   }.bind(this));
@@ -17,12 +17,12 @@ Template.deviceInfo.created = function () {
   //   });
   // },500);
 
-};
+});
 
-Template.deviceInfo.destroyed = function() {
+Template.deviceInfo.onDestroyed(function() {
   
-};
-Template.deviceInfo.rendered = function () {
+});
+Template.deviceInfo.onRendered(function () {
   this.autorun(function () {
     if (!this.subscription.ready()) {
       IonLoading.show();
@@ -30,7 +30,7 @@ Template.deviceInfo.rendered = function () {
       IonLoading.hide();
     }
   }.bind(this));
-};
+});
 
 Template.deviceInfo.helpers({
   device: function () {

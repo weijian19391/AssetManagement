@@ -1,6 +1,6 @@
 <template name="dashBoard">
   {{#if currentUser}}
-    {{#ionSideMenuContainer side ="left"}}
+    {{#ionSideMenuContainer side ="left" }}
       {{#ionSideMenu}}
         {{ > leftSideMenu}}
         {{> yield "leftSideBar"}}
@@ -40,7 +40,6 @@
               {{/each}}
             {{/ionList}}
             <button class="button button-positive button-block" data-action="logout">Log Out</button>
-            
       {{/ionSideMenuContent}}
     {{/ionSideMenuContainer}}
   {{/if}}

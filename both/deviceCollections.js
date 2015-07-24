@@ -28,7 +28,17 @@ Devices.attachSchema(new SimpleSchema({
   },
   locate: {
     type: String,
-    label: "Device location"
+    label: "Device location Description"
+  },
+  coordinate: {
+    type: Object,
+    optional: true
+  },
+  "coordinate.lat":{
+    type:String
+  },
+  "coordinate.lng": {
+    type:String
   },
   owner: {
     type: [Object]

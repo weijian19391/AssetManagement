@@ -1,0 +1,16 @@
+<template name="devicesMap">  
+	{{#contentFor "headerButtonLeft"}}
+		{{>ionNavBackButton path="/dashBoard" text="DashBoard"}}
+	{{/contentFor}}
+
+	{{#contentFor "headerTitle"}}
+		<h1 class="title">Location of Devices</h1>
+	{{/contentFor}}
+	{{#ionView}}
+		{{#ionContent}}
+			<div class="map-container">
+				{{> googleMap name="map" options=mapOptions}}
+			</div>
+		{{/ionContent}}
+	{{/ionView}}
+</template> 

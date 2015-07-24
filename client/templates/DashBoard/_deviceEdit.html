@@ -13,8 +13,9 @@
 					<div class="list card">
 						{{> afQuickField name='model' options="allowed" }}
 						{{> afQuickField name='UUID'}}
-						{{> afQuickField name='sensors' options=numSelectOptions}}
 						{{> afQuickField name='locate'}}
+						{{> deviceCoordinateEdit deviceCoor=device.coordinate}}
+						{{> afQuickField name='sensors' options=numSelectOptions}}
 						{{> afQuickField name='owner'}}
 						{{> afQuickField name='viewer'}}
 						<input type="file" id="uploadPictures" class="myFileInput" style="display: none;">

@@ -21,7 +21,11 @@ AutoForm.hooks({
 				Images.update({_id:newImagesDoc[i]._id}, {$set:{temp:false}});
 				Devices.update({_id:this.docId}, {$push:{imageId:newImagesDoc[i]._id}});
 			}
+			currentCoor = Session.get("myCoordinate");  
+			console.log(Session.get("myCoordinate"));
+			Devices.update({_id:this.docId},{$set:{coordinate:currentCoor}});
 			IonModal.close();
+
 		 //Router.go('devices.show', {_id: result});
 		},
 		onError: function(operation, error, template) {
@@ -47,16 +51,20 @@ Template._deviceNew.events({
 		document.getElementById("uploadPictures").click();    
 	},
 	'click [data-action="newImage"]': function(event, template){
-	    var cameraOptions = {width: 400, height: 300};
-	    MeteorCamera.getPicture(cameraOptions, function (error, data) {
-	      Images.insert(data, function (err, fileObj) {
-	        if (err){
-	           // handle error
-	           console.log("having error inserting: " + err);
-	        } else {
-	          Images.update({_id:fileObj._id}, {$set:{temp:true}});
-	        }
-	      });
-	    });
+		var cameraOptions = {width: 400, height: 300};
+		MeteorCamera.getPicture(cameraOptions, function (error, data) {
+		  Images.insert(data, function (err, fileObj) {
+			if (err){
+			   // handle error
+			   console.log("having error inserting: " + err);
+			} else {
+			  Images.update({_id:fileObj._id}, {$set:{temp:true}});
+			}
+		  });
+		});
 	}
 });
+
+// Template._deviceNew.onDestroyed(function(){
+// 	console.log("destryoing modal");
+// });
