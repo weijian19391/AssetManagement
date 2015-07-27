@@ -57,11 +57,38 @@
 					<div class="item item-body">
 					{{getData}}
 						<h2>Sensors Information</h2>
+						<p>Real time Data</p>
+						<table border="1" style="width:35%">
+						  <tr>
+						    <td>Gyroscope X:</td>
+						    <td>{{> chartDisplay sensorType="gyroX" deviceUUID=device.UUID displayChart=false}}</td>
+						  </tr>
+						  <tr>
+						    <td>Gyroscope Y:</td>
+						    <td>{{> chartDisplay sensorType="gyroY" deviceUUID=device.UUID displayChart=false}}</td>
+						  </tr>
+						  <tr>
+						    <td>Gyroscope Z:</td>
+						    <td>{{> chartDisplay sensorType="gyroZ" deviceUUID=device.UUID displayChart=false}}</td>
+						  </tr>
+						  <tr>
+						    <td>Acclerometer X:</td>
+						    <td>{{> chartDisplay sensorType="accX" deviceUUID=device.UUID displayChart=false}}</td>
+						  </tr>
+						  <tr>
+						    <td>Acclerometer Y:</td>
+						    <td>{{> chartDisplay sensorType="accY" deviceUUID=device.UUID displayChart=false}}</td>
+						  </tr>
+						  <tr>
+						    <td>Acclerometer Z:</td>
+						    <td>{{> chartDisplay sensorType="accZ" deviceUUID=device.UUID displayChart=false}}</td>
+						  </tr>
+						</table>
 						<p>
 							{{#each device.sensors}}
 								<p style="color:black">
 									{{type}} :
-									{{> chartDisplay sensorType=type deviceUUID=device.UUID}}
+									{{> chartDisplay sensorType=type deviceUUID=device.UUID displayChart=true}}
 								<br>
 								</p>
 								{{/each}}

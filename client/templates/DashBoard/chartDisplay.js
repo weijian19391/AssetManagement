@@ -5,7 +5,7 @@ Template.chartDisplay.onCreated(function() {
 	query = {"recordDate": Session.get("todayDate")};
 	myUUID = this.data.deviceUUID;
 	Session.setPersistent(myUUID+"query", query);
-	console.log(myUUID);
+	// console.log(myUUID);
 	Meteor.call('publishCollection',myUUID, function(error, result){
 	});
 	//using package to check if collection exist
@@ -18,7 +18,7 @@ Template.chartDisplay.onCreated(function() {
 	  Meteor.subscribe(myUUID, Session.get(myUUID+"query"));
 	});
 	
-	console.log(SensorDatabase.find().fetch());
+	// console.log(SensorDatabase.find().fetch());
 });
 
 Template.chartDisplay.helpers({
@@ -61,10 +61,23 @@ Template.chartDisplay.helpers({
 			currentDoc = SensorDatabase.find({"SensorType":"airPressure"}).fetch();
 		}else if(sensorType === "Battery Voltage") {
 			currentDoc = SensorDatabase.find({"SensorType":"battLvl"}).fetch();
+		}else if(sensorType === "gyroX") {
+			currentDoc = SensorDatabase.find({"SensorType":"gyroX"}).fetch();
+		}else if(sensorType === "gyroY") {
+			currentDoc = SensorDatabase.find({"SensorType":"gyroY"}).fetch();
+		}else if(sensorType === "gyroZ") {
+			currentDoc = SensorDatabase.find({"SensorType":"gyroZ"}).fetch();
+		}else if(sensorType === "accX") {
+			currentDoc = SensorDatabase.find({"SensorType":"accX"}).fetch();
+		}else if(sensorType === "accY") {
+			currentDoc = SensorDatabase.find({"SensorType":"accY"}).fetch();
+		}else if(sensorType === "accZ") {
+			currentDoc = SensorDatabase.find({"SensorType":"accZ"}).fetch();
 		}
-		console.log(currentDoc);
+		// console.log(currentDoc);
+		// console.log(sensorType);
 		if(currentDoc.length !== 0) {
-			console.log(currentDoc.length);
+			// console.log(currentDoc.length);
 			interval = currentDoc[0].interval;
 			timeObj = new Date(currentDoc[0].timestamp);
 			dataArr = currentDoc[0].SensorData;

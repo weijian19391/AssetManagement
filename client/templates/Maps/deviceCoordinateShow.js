@@ -33,8 +33,8 @@ Template.deviceCoordinateShow.helpers({
 	},
 	setCoordinate: function(deviceCoor){
 		Template.instance().myCoordinate.set(deviceCoor);
-		console.log("re-run set coor to show reactivity");
-		console.log(deviceCoor);
+		// console.log("re-run set coor to show reactivity");
+		// console.log(deviceCoor);
 		// Template.instance().myMarker.get().setPosition({lat:parseInt(deviceCoor.lat), lng:parseInt(deviceCoor.lng)});
 	}
 });	

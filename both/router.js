@@ -9,19 +9,6 @@ Meteor.startup(function () {
 			Session.set('platformOverride', location.queryObject.platformOverride);
 		}
 	}
-	// Accounts.onCreateUser(function (options, user) {
-	//    Roles.setRolesOnUserObj(user, ['admin','guest'],Roles.GLOBAL_GROUP);
-
-	//    if (options.profile) {
-	//      // include the user profile
-	//      user.profile = options.profile;
-	//    }
-
-	//    // other user object changes...
-	//    // ...
-		 
-	//    return user;
-	//  });
 });
 
 Router.map(function() {

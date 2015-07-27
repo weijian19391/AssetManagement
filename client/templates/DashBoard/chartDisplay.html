@@ -1,13 +1,16 @@
 <template name="chartDisplay">
 	{{setDate}}
-
-	<!-- {{#if templateReady}} -->
-	<div class="ct-chart ct-perfect-fourth" id='{{removeSpace sensorType}}'></div>
-	<!-- {{/if}} -->
-	<!-- {{deviceUUID}} -->
 	{{setSensorType sensorType}}
 	{{updateChart sensorType}}
-	Current Reading: {{getCurrent sensorType}} {{getUnit sensorType}}
+	
+	{{#if equals displayChart false}}
+		{{getCurrent sensorType}} {{getUnit sensorType}}
+	{{else}}
+		<div class="ct-chart ct-perfect-fourth" id='{{removeSpace sensorType}}' style="height:600px"></div>
+		Current Reading: {{getCurrent sensorType}} {{getUnit sensorType}}
+	{{/if}}
+
+
 
 	<!-- {{getDb}} -->
 
