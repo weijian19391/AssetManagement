@@ -6,6 +6,14 @@ Template._deviceEdit.helpers({
 	images: function() {
 		// console.log(Images.find({$or: [{_id:{$in:Session.get('imageIdArrEdit')}}, {temp:true}]}));
 		return (Images.find({$or: [{_id:{$in:Session.get('imageIdArrEdit')}}, {temp:true}]}));
+	},
+	//need the following function as without it, my session variable for my coordinate will not be set if i didnt drag the pin for map, hence there will be an
+	//error when i try to save the editing because there is en empty field for my device collection. 
+	setCoordinate: function() {
+		var template = Template.instance();
+		var currCoor = Devices.findOne({_id: template.data.id}).coordinate;
+		console.log(currCoor);
+		Session.set("myCoordinate", currCoor);
 	}
 });
 
