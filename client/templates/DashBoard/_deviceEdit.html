@@ -1,9 +1,10 @@
 <template name="_deviceEdit">
+
 	{{#ionModal customTemplate=true}}
 	{{#ionView}}
 <!--     {{#ionContent}} -->
 		{{#autoForm collection="Devices" doc=device id="device-edit-form" type="update"}}
-			{{setCoordinate}}
+				<!-- {{setCoordinate}} -->
 			<div class="bar bar-header bar-stable">
 				<button data-dismiss="modal" type="button" class="button button-clear">Cancel</button>
 				<h2 class="title">Edit device</h2>

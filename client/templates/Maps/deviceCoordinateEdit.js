@@ -17,6 +17,7 @@ Template.deviceCoordinateEdit.onCreated(function() {
 				coordinate.lat = event.latLng.lat();
 				coordinate.lng = event.latLng.lng();
 				Session.set("myCoordinate",coordinate);
+				console.log(Session.get("myCoordinate"));
 			});
 
 			google.maps.event.addListener(marker, 'dblclick', function(event) {

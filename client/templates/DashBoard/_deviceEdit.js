@@ -1,3 +1,11 @@
+Template._deviceEdit.onCreated(function(){
+	var template = Template.instance();
+		var currCoor = Devices.findOne({_id: template.data.id}).coordinate;
+		console.log(currCoor);
+		Session.set("myCoordinate", currCoor);
+});
+
+
 Template._deviceEdit.helpers({
 	device: function () {
 		var template = Template.instance();
@@ -20,15 +28,16 @@ Template._deviceEdit.helpers({
 AutoForm.hooks({
 	'device-edit-form': {
 		onSuccess: function (operation, result, template) {
+			console.log("inside on successs");
 			newImagesDoc = Images.find({temp:true}).fetch();
 			for (var i = newImagesDoc.length - 1; i >= 0; i--) {
 				Images.update({_id:newImagesDoc[i]._id}, {$set:{temp:false}});
 				Devices.update({_id:this.docId}, {$push:{imageId:newImagesDoc[i]._id}});
 			}
 			currentCoor = Session.get("myCoordinate");  
-			// console.log(Session.get("myCoordinate"));
+			console.log(Session.get("myCoordinate"));
 			Devices.update({_id:this.docId},{$set:{coordinate:currentCoor}});
-			// console.log(Devices.findOne({_id:this.docId}));
+			// console.log(Devices	.findOne({_id:this.docId}));
 			IonModal.close();
 		},
 		onError: function(operation, error, template) {
