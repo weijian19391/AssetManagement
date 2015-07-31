@@ -32,7 +32,7 @@ Template.chartDisplay.helpers({
 		return Session.get("RTData" + sensorType);
 	},
 	setDate: function(){
-		var timeCheck = new Date("2015-07-29T10:06:55.531Z");
+		var timeCheck = new Date();
 		var curr_date = timeCheck.getDate();
 		var curr_month = timeCheck.getMonth() + 1;
 		var curr_year = timeCheck.getFullYear();
